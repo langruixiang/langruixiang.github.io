@@ -6,7 +6,6 @@ description: some word here
 keywords: Java, Concurrency
 ---
 
-[toc]
 
 # 具体场景
 假设我们需要实现一个固定大小的支持多线程的环形缓冲区（ring buffer），该环形缓冲区支持FIFO顺序的get，put，以及大小相关的size，isFull，isEmpty操作，interface定义如下：
@@ -343,7 +342,5 @@ if替换RingbufferWithmonitor中的while
 			
 		}
 	});
-执行结果：
 
-![image](http://i2.bvimg.com/524586/a3b2f3fdadeb69c3s.png)
     
