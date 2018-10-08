@@ -36,12 +36,18 @@ Output the number of shortest proper prefixes.
     bbb
 >###样例输出
     4
+
 ##分析
-使用前缀树，插入单词的同时统计经过该节点的单词的个数，BFS或者DFS Trie树：</br>
-- 如果当前节点单词个数不大于5，则计数器加一，并且该节点的子节点一定不是shortest proper prefix（是proper prefix）,所以,不用访问其子节点</br>
-- 如果当前节点单词个数大于5，则访问其子节点</br>
+使用前缀树，插入单词的同时统计经过该节点的单词的个数，BFS或者DFS Trie树：
+
+- 如果当前节点单词个数不大于5，则计数器加一，并且该节点的子节点一定不是shortest proper prefix（是proper prefix）,所以,不用访问其子节点
+
+- 如果当前节点单词个数大于5，则访问其子节点
+
 ***tips:*** HiHoCoder本题Java编写的DFS只能通过90%的数据，BFS可以通过100%
+
 ##源代码：
+
 	import java.io.*;
 	import java.util.*;
 	

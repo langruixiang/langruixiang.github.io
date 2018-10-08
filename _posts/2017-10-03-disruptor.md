@@ -9,6 +9,7 @@ keywords: Disruptor
 # OneToThreeReleasingWorkerPoolThroughputTest
 
 ## Single Producer
+
 ```Java
 private final RingBuffer<ValueEvent> ringBuffer =
     RingBuffer.createSingleProducer(
@@ -16,9 +17,11 @@ private final RingBuffer<ValueEvent> ringBuffer =
         BUFFER_SIZE,
         new YieldingWaitStrategy());
 ```
+
  **createSingleProducer -> SingleProducerSequencer -> next(int n)** 
  
- ```Java
+ 
+```Java
 public long next(int n)
     {
         if (n < 1)
@@ -54,6 +57,7 @@ public long next(int n)
 ```
 
 ## Multiple Consumer
+
 ```Java
 private final WorkerPool<ValueEvent> workerPool =
     new WorkerPool<ValueEvent>(
@@ -62,9 +66,11 @@ private final WorkerPool<ValueEvent> workerPool =
         new FatalExceptionHandler(),
         handlers);
 ```
+
 * WorkPool中的workProcessor共享一个worksequence
 * WorkPool -> 初始化WorkProcessor 
 * **ringbuffer.start -> WorkProcessor.run -> SequenceBarrier.waitFor -> ProcessingSequenceBarrier.waitFor -> waitStrategy.waitFor**
+
 ```Java
 public void run()
     {

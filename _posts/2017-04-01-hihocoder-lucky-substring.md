@@ -34,6 +34,7 @@ Output the lucky substrings in lexicographical order, one per line. Same substri
 题目限制输入字符串的长度不大于100，大大降低本题的难度，即便用O(n<sup>2</sup>)复杂度的算法也不会TLE，我们用双重循环便可以得到所有的子串，然后很容易得到子串中不同字符的个数，我们用set或者boolean数组存储100以内的斐波那契数，将符合条件的子串加入TreeSet中，由于TreeSet本身就是有序的，所以遍历输出即可。
 
 ##源代码
+
 	import java.io.File;
 	import java.io.FileNotFoundException;
 	import java.util.HashSet;

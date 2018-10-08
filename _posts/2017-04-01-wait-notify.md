@@ -17,6 +17,7 @@ keywords: Java, Concurrency
     	public boolean isEmpty();
     	public int size();
     }
+    
 # 分析
 很多场景下，线程只需要拿到锁就满足了可执行条件直接执行就可以。固定大小的环形缓冲区则不太一样，考虑以下场景:
 
@@ -33,7 +34,9 @@ Java中任何一个对象都带有一个monitor锁，同时，任何一个对象
              obj.wait();
          ... // Perform action appropriate to condition
     }
+    
 * obj.wait()在synchorized块中，保证wait调用时，当前线程已获得monitor锁。wait调用后，当前线程释放monitor锁，并加入等待队列，被唤醒时，线程需要重新获取monitor锁，并继续执行wait函数后的代码
+
 * while(<condition does not hold>)很重要，我们常常使用notifyAll去唤醒等待队列中的线程，这些被唤醒的线程中的一个执行后可能导致被唤醒的其他线程不再满足congdition **（假唤醒）**，所以使用while循环，重新判断等待条件是否满足，不满足则继续加入等待队列等待下次唤醒。一个用if替换while导致**错误的示例**可参考Appendix，
 
 用wait和notify实现的唤醒缓冲区代码如下，
@@ -116,9 +119,10 @@ Condition是专为线程获取锁后需要等待其他条件而设置的一个�
     Condition notEmpty = getLock.newCondition();
     Condition otherCondition = getLock.newCondition();
 调用condition.await可将线程加入condition的等待队列，通过condition.signal可将condition等待队列的线程唤醒，与wait、notify类似，condition有如下约束
+
 * await与signal函数必须在获取对应的ReentrantLock后调用。调用notEmpty的await和signal必选在getLock之后调用。
 
-
+```
     ReentrantLock getLock = new ReentrantLock();
     Condition notEmpty = getLock.newCondition();
     try{
@@ -129,112 +133,118 @@ Condition是专为线程获取锁后需要等待其他条件而设置的一个�
     }finally{
         getLock.unlock();
     }
+```
+    
 * 为了避免假唤醒，写在while循环内
 
 一个用condition实现的唤醒缓冲区代码如下
-    public class RingbufferWithCondition implements Ringbuffer{
-    	
-    	private Integer[] buffer;
-    	private int capacaity;
-    	private int head = 0;
-    	private int tail = 0;
-    	private AtomicInteger size = new AtomicInteger(0);
-    	
-    	private ReentrantLock getLock = new ReentrantLock();
-    	private Condition notEmpty = getLock.newCondition();
-    	
-    	private ReentrantLock addLock = new ReentrantLock();
-    	private Condition notFull = addLock.newCondition();
-    	
-    	public RingbufferWithCondition(int capacity) {
-    		this.capacaity = capacity;
-    		buffer = new Integer[capacity];
-    	}
+
+```
+public class RingbufferWithCondition implements Ringbuffer{
+	
+	private Integer[] buffer;
+	private int capacaity;
+	private int head = 0;
+	private int tail = 0;
+	private AtomicInteger size = new AtomicInteger(0);
+	
+	private ReentrantLock getLock = new ReentrantLock();
+	private Condition notEmpty = getLock.newCondition();
+	
+	private ReentrantLock addLock = new ReentrantLock();
+	private Condition notFull = addLock.newCondition();
+	
+	public RingbufferWithCondition(int capacity) {
+		this.capacaity = capacity;
+		buffer = new Integer[capacity];
+	}
     
-    	public Integer get() {
-    		int ret;
-    		try {
-    			getLock.lock();
-    			
-    			while(size.intValue() == 0) {
-    				try {
-    					notEmpty.await();
-    				} catch (InterruptedException e) {
-    					e.printStackTrace();
-    				}
-    			}
-    			
-    			ret = buffer[head];
-    			head = (head + 1) % capacaity;
-    			size.decrementAndGet();
-    			if(size.intValue() > 0) {
-    				notEmpty.signal();
-    			}
-    		} finally {
-    			getLock.unlock();
-    		}
-    		
-    		signalNotFull();
-    		return ret;
-    	}
+	public Integer get() {
+		int ret;
+		try {
+			getLock.lock();
+			
+			while(size.intValue() == 0) {
+				try {
+					notEmpty.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			ret = buffer[head];
+			head = (head + 1) % capacaity;
+			size.decrementAndGet();
+			if(size.intValue() > 0) {
+				notEmpty.signal();
+			}
+		} finally {
+			getLock.unlock();
+		}
+		
+		signalNotFull();
+		return ret;
+	}
     
-    	public void add(Integer num) {
-    		try {
-    			addLock.lock();	
-    			
-    			while(size.intValue() == capacaity) {
-    				try {
-    					notFull.await();
-    				} catch (InterruptedException e) {
-    					e.printStackTrace();
-    				}
-    			}
-    			
-    			buffer[tail] = num;
-    			tail = (tail + 1) % capacaity;
-    			size.incrementAndGet();
-    			
-    			if(size.intValue() < capacaity) {
-    				notFull.signal();
-    			}
-    		} finally {
-    			addLock.unlock();
-    		}
-    		
-    		signalNotEmpty();		
-    	}
+	public void add(Integer num) {
+		try {
+			addLock.lock();	
+			
+			while(size.intValue() == capacaity) {
+				try {
+					notFull.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			buffer[tail] = num;
+			tail = (tail + 1) % capacaity;
+			size.incrementAndGet();
+			
+			if(size.intValue() < capacaity) {
+				notFull.signal();
+			}
+		} finally {
+			addLock.unlock();
+		}
+		
+		signalNotEmpty();		
+	}
     
-    	public boolean isFull() {
-    		return size.intValue() == capacaity;
-    	}
+	public boolean isFull() {
+		return size.intValue() == capacaity;
+	}
     
-    	public boolean isEmpty() {
-    		return size.intValue() == 0;
-    	}
+	public boolean isEmpty() {
+		return size.intValue() == 0;
+	}
     
-    	public int size() {
-    		return size.intValue();
-    	}
-    	
-    	private void signalNotEmpty() {
-    		try {
-    			getLock.lock();
-    			notEmpty.signal();
-    		}finally{
-    			getLock.unlock();
-    		}
-    	}
-    	
-    	private void signalNotFull() {
-    		try {
-    			addLock.lock();
-    			notFull.signal();
-    		} finally {
-    			addLock.unlock();
-    		}
-    	}
+	public int size() {
+		return size.intValue();
+	}
+	
+	private void signalNotEmpty() {
+		try {
+			getLock.lock();
+			notEmpty.signal();
+		}finally{
+			getLock.unlock();
+		}
+	}
+	
+	private void signalNotFull() {
+		try {
+			addLock.lock();
+			notFull.signal();
+		} finally {
+			addLock.unlock();
+		}
+	}
     
-    }
+}
+```
+ 
 * signalNotEmpty函数用于在add调用后唤醒get的等待线程，signalNotFull类似
 * signalNotEmpty调用一定不要位于addLock.lock()和addLock.unlock之间，signalNotEmpty要调用getLock.lock,容易死锁。我第一次写在这踩了坑，对比[2]才找出来的 /(ㄒoㄒ)/~~
 
@@ -243,8 +253,10 @@ Condition是专为线程获取锁后需要等待其他条件而设置的一个�
 [1] 摘自JDK1.8 wait函数的javadoc文档
 
 [2] JDK1.8 LinkedBlockingQueue的实现及Javadoc文档
+
 # Appendix
-if替换RingbufferWithmonitor中的while
+
+错误的写法：if替换RingbufferWithmonitor中的while
 
     public class WrongRingbufferWithmonitor implements Ringbuffer{
     

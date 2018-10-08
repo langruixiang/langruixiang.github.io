@@ -11,9 +11,12 @@ Executors类是一个工厂设计模式的类，从返回值来看，分为返�
 
 ##2. 返回值为Callable的函数
 返回值为Callable的函数主要起适配器的作用，例如将Runnable对象封装为Callable对象，将PrivilegedAction封装为Callable对象等。
+
 ##3. 返回值为ThreadFactory的函数
 ThreadFactory是用于生产某种特定属性线程的工厂方法比如特定优先级的线程，属性是守护进程的线程等。
+
 ##4. 返回值为ExecutorsService或ScheduledExecutorService的函数
+
 ###4.1 
 * ***newCachedThreadPool***</br>
 * ***newFixedThreadPool***</br>
@@ -93,6 +96,7 @@ ThreadPoolExecutor工作原理如下：</br>
 * newFixedThreadPool的corePoolSize为nThread，maximumPoolSize为nThread，阻塞队列为LinkedBlockingQueue。当alive小于nThread时，来一个任务创建一个线程，直至alive == nThread。此时，新来任务加入阻塞队列，LinkedBlockingQueue是一个无界队列(其容量是Integer.MAX\_VALUE，往往达不到Integer.MAX\_VALUE时，已经OOM了，暂称其为无界队列)，所以永远不可能创建大于nThread个数的线程，即线程池最大也是nThread。
 * newSingleThreadExecutor是nThread = 1的newFixedThreadPool
 * newScheduledThreadPool的corePoolSize为corePoolSize，maximumuPoolSize为Integer.MAX\_VALUE，阻塞队列为DelayedWorkQueue，DelayedWorkQueue是一个无界的优先队列，按照任务休眠时间排序，休眠时间少的在队列前端，因此，可以实现任务按照时间调度的目的。
+
 ###4.2
 * ***newWorkStealingPool***</br>
 
