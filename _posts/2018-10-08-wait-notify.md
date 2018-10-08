@@ -1,3 +1,11 @@
+---
+layout: post
+title: wait、notify与Condition
+categories: [Java]
+description: some word here
+keywords: Java, Concurrency
+---
+
 [toc]
 
 # 具体场景
@@ -12,8 +20,10 @@
     }
 # 分析
 很多场景下，线程只需要拿到锁就满足了可执行条件直接执行就可以。固定大小的环形缓冲区则不太一样，考虑以下场景:
+
 * 线程A要执行put操作，并且已经拿到了锁，然而缓冲区当前是满的 /(ㄒoㄒ)/~~
 * 线程B要执行get操作，并且已经拿到了锁，然而缓冲区当前是空的 /(ㄒoㄒ)/~~
+
 在线程中使用while操作去轮询是一种方案，这种情况下，线程会占用cpu，一直检查条件是够满足，怎样实现A线程在不满足条件时休眠，条件满足后程序自动唤醒A线程？
 
 # wait、notify
