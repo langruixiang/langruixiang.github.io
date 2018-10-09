@@ -6,20 +6,28 @@ description: JDK AQS框架分析
 keywords: JDK, AQS
 ---
 
-##引言
-***ReentrantLock***是JDK提供的一个可重入互斥锁，所谓可重入就是同一个锁允许被已经获得该锁的线程重新获得。可重入锁的好处可以在递归算法中使用锁，不可重入锁则导致无法在递归算法中使用锁。因为第二次递归时由于第一次递归已经占有锁，而导致死锁。本文我们将探讨JDK中ReentrantLock的实现。</br>
-***Semaphore***是JDK提供的一个可共享的同步组建，有n个许可，多个线程可以共同去获得许可，当线程申请的许可小于n时即可成功申请，否则申请失败。</br>
-***AQS（AbstractQueuedSynchronizer）***是Java实现同步组建的基础框架，一般以静态内部类的形式实现在某个同步组件类中，通过代理的方式向外提供同步服务，ReentrantLock和Semaphore都是基于AQS实现的同步组件，前者是独占式同步组建，即一个线程获得后，其他线程无法获得。后者是共享式同步组件，一个线程获得后，在满足的条件下，其他线程也可以获得。</br>
-##AQS工作原理
-AQS是Java实现同步组建的基础框架，其基本思想是用一个volatile int state变量来表示当前同步组件的状态，用getState()获取同步组件的状态，用compareAndSet(int expect, int update)来对state状态进行操作，compareAndSet可以保证对state变量更新值的原子性。AQS中很多方法是final的，即不允许用户覆盖，用户自定义的方法一般有：</br>
+## 引言
+
+***ReentrantLock***是JDK提供的一个可重入互斥锁，所谓可重入就是同一个锁允许被已经获得该锁的线程重新获得。可重入锁的好处可以在递归算法中使用锁，不可重入锁则导致无法在递归算法中使用锁。因为第二次递归时由于第一次递归已经占有锁，而导致死锁。本文我们将探讨JDK中ReentrantLock的实现。
+
+***Semaphore***是JDK提供的一个可共享的同步组建，有n个许可，多个线程可以共同去获得许可，当线程申请的许可小于n时即可成功申请，否则申请失败。
+
+***AQS（AbstractQueuedSynchronizer）***是Java实现同步组建的基础框架，一般以静态内部类的形式实现在某个同步组件类中，通过代理的方式向外提供同步服务，ReentrantLock和Semaphore都是基于AQS实现的同步组件，前者是独占式同步组建，即一个线程获得后，其他线程无法获得。后者是共享式同步组件，一个线程获得后，在满足的条件下，其他线程也可以获得。
+
+
+## AQS工作原理
+AQS是Java实现同步组建的基础框架，其基本思想是用一个volatile int state变量来表示当前同步组件的状态，用getState()获取同步组件的状态，用compareAndSet(int expect, int update)来对state状态进行操作，compareAndSet可以保证对state变量更新值的原子性。AQS中很多方法是final的，即不允许用户覆盖，用户自定义的方法一般有：
+
 
 * tryAcquire: 独占式获取同步状态，该函数一般首先查询state的值，如果state不允许继续被获取，直接返回false。如果state允许继续被获取，CAS尝试更新state的值，成功返回true，失败返回false
 * tryAcquireShared：共享式的获取同步状态，该一般是在CAS死循环获取state的值，计算state被获取后的值，如果该值为负数，直接返回负数表示失败，如果该值为正值，则用CAS更新该值，当CAS更新失败时，重复上述步骤，直至返回负数或CAS更新成功返回正值。
 * tryRelease：独占式的释放同步状态
 * tryReleaseShared：共享式的释放同步状态，一般在CAS死循环中反复尝试，直至释放成功
-* isHeldExclusively：判断当前同步器是否被当前线程占有</br>
+* isHeldExclusively：判断当前同步器是否被当前线程占有
+
  
-AQS提供的模板方法有：</br>
+AQS提供的模板方法有：
+
 
 * acquire:独占式的获取同步状态，获取成功则返回，获取失败则会进入等待队列，该方法会调用用户自定义的tryAcquire函数
 * acquireInterruptibly：与acquire类似，不同在于当进入等待队列时，遇到中断会抛出InterruptedException异常，用户可以处理该中断异常
@@ -31,14 +39,15 @@ AQS提供的模板方法有：</br>
 * releaseShared：共享式的释放同步状态，会调用用户自定义tryReleaseShared函数
 * getQueuedThreads：获取等待队列线程集合
 
-##ReentrantLock源码分析
+## ReentrantLock源码分析
 ReentrantLock的默认构造函数是
 
 	public ReentrantLock() {
 	        sync = new NonfairSync();
 	}
 NonfairSync继承了Sync，Sync是一个抽象类，并继承了抽象类AbstractQueuedSynchronizer。
-ReentrantLock是一个独占式的锁，所以它需要实现tryAcquire函数和tryRelease函数</br>
+ReentrantLock是一个独占式的锁，所以它需要实现tryAcquire函数和tryRelease函数
+
 **tryAcquire函数源码如下**
 
 	protected final boolean tryAcquire(int acquires) {
@@ -64,6 +73,7 @@ nonfairTryAcquire(acquires)源码如下
 	        }
 	        return false;
     }
+    
 * 先得到当前线程
 * 查询当前state值，如果为0则说明当前锁还未被其他线程获取，则尝试CAS获得锁，成功则把占有锁的线程设置为当前线程，返回true。失败返回false。
 * 如果state不为0则说明该锁已经被其他线程获取，则检查获得锁的线程是否是当前线程以实现可重入特性，如果是，则更新state的值，并返回true。此处更新不需要CAS，因为只有当前线程可以操作state。
@@ -111,7 +121,7 @@ sunc的lock函数
     }
 调用tryRelease函数释放锁。
 
-##Semaphore的源码
+## Semaphore的源码
 Semaphore构造函数如下：
 
 	public Semaphore(int permits) {
@@ -137,7 +147,7 @@ nonfairTryAcquireShared源码：
     }
 * 函数首先取得当前的可用许可数，并计算被获取acquires个许可后剩余的许可数。
 * 如果剩余的许可数小于0直接返回剩余的许可数，即负值
-* 如果大于0则尝试使用CAS循环更新state的值，更新失败则重试上述步骤，直至返回负值更新失败，或者返回非负值更新成功。</br>
+* 如果大于0则尝试使用CAS循环更新state的值，更新失败则重试上述步骤，直至返回负值更新失败，或者返回非负值更新成功。\n
 ***tips：***与独占式的tryAcquire逻辑不太一样，独占式的tryAcquire在CAS操作失败后，直接返回失败。本人觉得共享式的tryAcquiredShared在CAS操作失败后，因为组件是共享的，所以再次尝试获取同步组件成功的可能性较大，所以在CAS失败后，尝试再次更新。而独占式的CAS更新失败后，组件已经被其他线程获取，再次尝试成功的可能性较小，所以没有重新尝试。纯属个人观点。
 
 **tryReleasedShared**源码
@@ -170,7 +180,7 @@ acquireSharedInterruptibly为AQS提供的模板方法，调用了tryAcquireShare
     }
 releaseShared为AQS提供的模板方法，调用了tryReleaseShared
 
-##总结
+## 总结
 完整的ReentrantLock和Semaphore实现非常复杂，本文旨在介绍AQS框架，并通过ReentrantLock和Semaphore一个独占式的同步组件和一个非独占式的同步组件来学习怎么使用AQS实现通组件，具体来说分为以下步骤：
 
 * 待实现的同步组件是独占式的还是共享式的

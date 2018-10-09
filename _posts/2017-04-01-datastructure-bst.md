@@ -6,7 +6,6 @@ description: 二叉查找树的递归版本实现
 keywords: Data Structure, Algorithm, BST
 ---
 
-## BST的递归实现
 
 ## 引言
 本文使用递归实现了BST，并测试了代码的正确性

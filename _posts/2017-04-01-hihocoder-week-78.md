@@ -6,6 +6,8 @@ description: Trie的应用和实现
 keywords: Algorithm
 ---
 
+tips: Trie的应用和实现
+
 ### HiHoCoder 题目链接：[HiHoCoder Week 78](http://hihocoder.com/contest/hiho78/problem/1)
 >### 描述
 <a href="http://i4.tietuku.com/8e622dec30fdfc71.png" title="点击显示原始图片"><img src="http://i4.tietuku.com/8e622dec30fdfc71t.jpg"></a></br>

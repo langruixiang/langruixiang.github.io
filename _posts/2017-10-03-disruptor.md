@@ -7,8 +7,6 @@ keywords: Disruptor
 ---
 
 
-# disruptor简介
-
 ## 背景
 Disruptor是英国外汇交易公司LMAX开发的一个高性能队列，研发的初衷是解决内存队列的延迟问题。与Kafka([Apache Kafka](http://kafka.apache.org/))、RabbitMQ([RabbitMQ](http://www.rabbitmq.com/download.html))用于服务间的消息队列不同，disruptor一般用于线程间消息的传递。基于Disruptor开发的系统单线程能支撑每秒600万订单，2010年在QCon演讲后，获得了业界关注。2011年，企业应用软件专家Martin Fowler专门撰写长文介绍[The LMAX Architecture](https://martinfowler.com/articles/lmax.html)。同年它还获得了Oracle官方的Duke大奖。其他关于disruptor的背景就不在此多言，可以自己google。
 

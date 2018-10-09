@@ -6,6 +6,8 @@ description: 注意数据规模，数据规模也决定了题目的难度
 keywords: Algorithm
 ---
 
+tips: 注意数据规模，数据规模也决定了题目的难度
+
 ## HiHoCoder题目链接 [#1152 : Lucky Substrings](http://hihocoder.com/problemset/problem/1152)
 
 >### 描述

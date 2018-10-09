@@ -6,9 +6,9 @@ description: 二叉树的前序，中序，后序非递归遍历
 keywords: Data Structure, Algorithm, Binary Tree
 ---
 
-##二叉树非递归遍历
+## 二叉树非递归遍历
 
-##1. 前序
+## 1. 前序
 
 ```
 public List<Integer> preorderTraversal(TreeNode root) {
@@ -33,7 +33,7 @@ public List<Integer> preorderTraversal(TreeNode root) {
 ```
 
 
-##2. 中序
+## 2. 中序
 
 ```
 public List<Integer> inorderTraversal(TreeNode root) {
@@ -56,7 +56,7 @@ public List<Integer> inorderTraversal(TreeNode root) {
 }
 ```
 
-##3. 后序
+## 3. 后序
 
 ```
 public List<Integer> postorderTraversal(TreeNode root) {

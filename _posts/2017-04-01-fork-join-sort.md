@@ -6,6 +6,8 @@ description: 利用JDK Fork Join Pool实现排序算法
 keywords: JDK
 ---
 
+tips：利用JDK Fork Join Pool实现快速排序算法
+
 ## 1. 引言
 ForkJoin框架在[这里](http://niceaz.com/java-executors%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/#more-147)有过介绍，现在实现用ForkJoin框架实现快速排序，并用jUnit测试算法的正确性和效率。
 

@@ -6,6 +6,8 @@ description: 基于JDK实现动态代理
 keywords: Java, AOP
 ---
 
+基于JDK的Java动态代理的实现
+
 # 具体场景
 
 * 为了使代理类和被代理类对第三方有相同的函数，代理类和被代理类一般实现一个公共的interface，该interface定义如下

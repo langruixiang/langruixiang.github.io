@@ -6,7 +6,6 @@ description: 并查集数据结构的实现
 keywords: Data Structure, Union Find Set
 ---
 
-## 并查集
 
 ## 概述
 本文用数组arr实现了并查集：当arr[i] == i 时， i为集合的根节点，集合的标号为i。当arr[i] != i 时，则arr[i] 为i的父节点，沿着父节点向上寻找，直到arr[i] == i，即找到i所属的集合。主要操作如下：

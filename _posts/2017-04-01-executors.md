@@ -6,6 +6,8 @@ description: JDK Executors线程池
 keywords: JDK, Executors
 ---
 
+tips：JDK Executors线程池
+
 ## 1. 引言
 Executors类是一个工厂设计模式的类，从返回值来看，分为返回Callable、ThreadFactory、ExecutorsService、ScheduleExecutorsService的，现分别阐述。
 

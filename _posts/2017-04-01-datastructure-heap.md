@@ -6,6 +6,8 @@ description: heap的实现， 用于熟悉数据结构
 keywords: Data Structure, Algorithm
 ---
 
+tips： heap的Java实现
+
 ## Heap的实现
 
 	public class Heap {

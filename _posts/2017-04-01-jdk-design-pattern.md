@@ -6,6 +6,8 @@ description: 分析JDK中的设计模式，更好的理解设计模式
 keywords: Java, Design Pattern
 ---
 
+tips: 分析JDK中的设计模式，更好的理解设计模式
+
 ## JDK中的设计模式——长期更新
 
 ## 引言
