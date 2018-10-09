@@ -2,7 +2,7 @@
 layout: post
 title: ReentrantLock
 categories: [Java]
-description: 
+description: JDK AQS框架分析
 keywords: JDK, AQS
 ---
 

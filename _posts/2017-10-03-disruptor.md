@@ -2,7 +2,7 @@
 layout: post
 title: disruptor简介
 categories: [Middleware]
-description: disruptor简介
+description: Java线程间无锁队列disruptor简介
 keywords: Disruptor
 ---
 

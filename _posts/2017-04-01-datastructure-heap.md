@@ -2,11 +2,11 @@
 layout: post
 title: Heap的实现
 categories: [Algorithm]
-description: 
+description: heap的实现， 用于熟悉数据结构
 keywords: Data Structure, Algorithm
 ---
 
-##Heap的实现
+## Heap的实现
 
 	public class Heap {
 		private int[] arr;

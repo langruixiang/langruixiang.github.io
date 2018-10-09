@@ -2,14 +2,16 @@
 layout: post
 title: BST的递归实现
 categories: [Algorithm]
-description: 
+description: 二叉查找树的递归版本实现
 keywords: Data Structure, Algorithm, BST
 ---
 
-##BST的递归实现
-##引言
+## BST的递归实现
+
+## 引言
 本文使用递归实现了BST，并测试了代码的正确性
-##插入
+
+## 插入
 比较简单，比较插入值与根节点值的大小。相等，则无需操作；小于则插入根节点左子树；大于则插入根节点右子树。
 代码：
 
@@ -38,7 +40,7 @@ public TreeNode insert(int value, TreeNode root){
 }
 ```
 
-##查找
+## 查找
 比较简单，与插入类似，直接上代码
 
 ```
@@ -62,7 +64,7 @@ public TreeNode find(int value, TreeNode root){
 }
 ```
 
-##删除
+## 删除
 相对繁琐一点，先找到被删节点，被删节点没有孩子，直接删除，被删节点只有一个孩子，则返回该节点的孩子。被删节点有两个孩子，将右子树最小节点值覆盖当前节点，删除右子树最小节点。
 
 ```	
@@ -116,7 +118,7 @@ public TreeNode delete(int value, TreeNode root){
 }
 ```
 
-##测试
+## 测试
 验证一个树是BST，中序遍历，遍历的值为升序
 
 ```
@@ -140,7 +142,7 @@ private boolean isBST(BST.TreeNode root){
 }
 ```
 
-##源码
+## 源码
 BST：
 
 ```

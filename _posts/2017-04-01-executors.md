@@ -2,22 +2,24 @@
 layout: post
 title: Executors
 categories: [Java]
-description: 
+description: JDK Executors线程池
 keywords: JDK, Executors
 ---
 
-##1. 引言
+## 1. 引言
 Executors类是一个工厂设计模式的类，从返回值来看，分为返回Callable、ThreadFactory、ExecutorsService、ScheduleExecutorsService的，现分别阐述。
 
-##2. 返回值为Callable的函数
+## 2. 返回值为Callable的函数
 返回值为Callable的函数主要起适配器的作用，例如将Runnable对象封装为Callable对象，将PrivilegedAction封装为Callable对象等。
 
-##3. 返回值为ThreadFactory的函数
+## 3. 返回值为ThreadFactory的函数
 ThreadFactory是用于生产某种特定属性线程的工厂方法比如特定优先级的线程，属性是守护进程的线程等。
 
-##4. 返回值为ExecutorsService或ScheduledExecutorService的函数
+## 4. 返回值为ExecutorsService或
+ScheduledExecutorService的函数
 
-###4.1 
+### 4.1 
+
 * ***newCachedThreadPool***</br>
 * ***newFixedThreadPool***</br>
 * ***newSingleThreadPool***</br>
@@ -97,7 +99,8 @@ ThreadPoolExecutor工作原理如下：</br>
 * newSingleThreadExecutor是nThread = 1的newFixedThreadPool
 * newScheduledThreadPool的corePoolSize为corePoolSize，maximumuPoolSize为Integer.MAX\_VALUE，阻塞队列为DelayedWorkQueue，DelayedWorkQueue是一个无界的优先队列，按照任务休眠时间排序，休眠时间少的在队列前端，因此，可以实现任务按照时间调度的目的。
 
-###4.2
+### 4.2
+
 * ***newWorkStealingPool***</br>
 
 newWorkStealingPool代码如下：
@@ -124,7 +127,7 @@ ForkJoin框架是一种特别适合执行分治任务的线程池框架，一般
 
 回到newWorkStealingPool，它使用的“工作窃取”机制的线程池，只不过其执行的不是RecursiveTask/RecursiveAction，而是普通的Runnable/Callable，因此，适合大量小规模的Runnable/Callable的执行。
 
-##5 总结
+## 5 总结
 总而言之，Executors框架的线程池分为两类，一类是对ThreadPoolExecutor的封装，一类是对ForkJionPool的封装。我们也可以直接调用ThreadPoolExecutor，ForkJionPool类定义自己的线程池。
 
 	

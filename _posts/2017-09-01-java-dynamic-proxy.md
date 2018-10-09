@@ -2,7 +2,7 @@
 layout: post
 title: Java动态代理
 categories: [Java]
-description: 
+description: 基于JDK实现动态代理
 keywords: Java, AOP
 ---
 

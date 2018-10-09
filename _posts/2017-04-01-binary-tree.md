@@ -2,7 +2,7 @@
 layout: post
 title: 二叉树非递归遍历
 categories: [Algorithm]
-description: 
+description: 二叉树的前序，中序，后序非递归遍历
 keywords: Data Structure, Algorithm, Binary Tree
 ---
 

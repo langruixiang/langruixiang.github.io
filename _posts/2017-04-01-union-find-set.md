@@ -2,19 +2,20 @@
 layout: post
 title: 并查集
 categories: [Algorithm]
-description: 
+description: 并查集数据结构的实现
 keywords: Data Structure, Union Find Set
 ---
 
-##并查集
+## 并查集
 
-##概述
+## 概述
 本文用数组arr实现了并查集：当arr[i] == i 时， i为集合的根节点，集合的标号为i。当arr[i] != i 时，则arr[i] 为i的父节点，沿着父节点向上寻找，直到arr[i] == i，即找到i所属的集合。主要操作如下：
 
 * 初始化：最开始，所有的元素属于不同的集合，所以arr[i] = i
 * Find(i): 如果arr[i] == i 则返回i；如果arr[i] != i， 则让i = arr[i], 重复执行该步骤。
 * Union(i, j)：分别找到i和j所属的集合的根节点si、sj，如果si == sj，即i，j已经属于同一个集合，直接返回；如果si != sj，则将高度较小的集合根节点(设其是si)指向高度较大的集合的根节点，即arr[si] = sj,这样可以减少集合高度的增长，利于减少Find查找次数。
-##源码
+
+## 源码
 
 ```
 public class UnionFindSet {

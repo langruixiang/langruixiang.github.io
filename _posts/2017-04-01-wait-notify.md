@@ -2,7 +2,7 @@
 layout: post
 title: wait、notify与Condition
 categories: [Java]
-description: some word here
+description: 基于JDK生产者消费者模式的经典实现方法
 keywords: Java, Concurrency
 ---
 

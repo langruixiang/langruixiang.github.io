@@ -2,21 +2,21 @@
 layout: post
 title: HiHoCoder题目链接 1152  Lucky Substrings
 categories: [Algorithm]
-description: 
+description: 注意数据规模，数据规模也决定了题目的难度
 keywords: Algorithm
 ---
 
-##HiHoCoder题目链接 [#1152 : Lucky Substrings](http://hihocoder.com/problemset/problem/1152)
+## HiHoCoder题目链接 [#1152 : Lucky Substrings](http://hihocoder.com/problemset/problem/1152)
 
->###描述
+>### 描述
 A string s is LUCKY if and only if the number of different characters in s is a fibonacci number. Given a string consisting of only lower case letters, output all its lucky non-empty substrings in lexicographical order. Same substrings should be printed once.
->###输入
+>### 输入
 A string consisting no more than 100 lower case letters.
->###输出
+>### 输出
 Output the lucky substrings in lexicographical order, one per line. Same substrings should be printed once.
->###样例输入
+>### 样例输入
     aabcd
->###样例输出
+>### 样例输出
     a
     aa
     aab
@@ -30,10 +30,10 @@ Output the lucky substrings in lexicographical order, one per line. Same substri
     cd
     d
     
-##分析
+## 分析
 题目限制输入字符串的长度不大于100，大大降低本题的难度，即便用O(n<sup>2</sup>)复杂度的算法也不会TLE，我们用双重循环便可以得到所有的子串，然后很容易得到子串中不同字符的个数，我们用set或者boolean数组存储100以内的斐波那契数，将符合条件的子串加入TreeSet中，由于TreeSet本身就是有序的，所以遍历输出即可。
 
-##源代码
+## 源代码
 
 	import java.io.File;
 	import java.io.FileNotFoundException;
