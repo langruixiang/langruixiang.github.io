@@ -1,6 +1,6 @@
 ---
 layout: wiki
-title: 我常用的shell脚本
+title: 脚本提升效率
 categories: [效率]
 description: 一些shell脚本，iTerm2+zsh体验，提高工作效率
 keywords: shell
@@ -12,7 +12,7 @@ keywords: shell
 
 于是我想要的一种效果是，当我在本地时，iterm2的tab是黑色，登陆线下环境的时候，iterm2的tab自动变成绿色，登陆线上环境的时候，iterm2的tab自动变成红色，这样我就能很清楚的知道我是在本地还是线下还是线上。
 
-![](./assets/iterm_tab_color.png)
+![](/images/wiki/iterm_tab_color.png)
 
 参考以下脚本：
 

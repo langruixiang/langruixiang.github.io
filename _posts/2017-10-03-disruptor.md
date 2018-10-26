@@ -1,6 +1,6 @@
 ---
 layout: post
-title: disruptor简介
+title: Disruptor简介
 categories: [Middleware]
 description: Java线程间无锁队列disruptor简介
 keywords: Disruptor
@@ -8,7 +8,9 @@ keywords: Disruptor
 
 
 ## 背景
-Disruptor是英国外汇交易公司LMAX开发的一个高性能队列，研发的初衷是解决内存队列的延迟问题。与Kafka([Apache Kafka](http://kafka.apache.org/))、RabbitMQ([RabbitMQ](http://www.rabbitmq.com/download.html))用于服务间的消息队列不同，disruptor一般用于线程间消息的传递。基于Disruptor开发的系统单线程能支撑每秒600万订单，2010年在QCon演讲后，获得了业界关注。2011年，企业应用软件专家Martin Fowler专门撰写长文介绍[The LMAX Architecture](https://martinfowler.com/articles/lmax.html)。同年它还获得了Oracle官方的Duke大奖。其他关于disruptor的背景就不在此多言，可以自己google。
+Disruptor是英国外汇交易公司LMAX开发的一个高性能队列，研发的初衷是解决内存队列的延迟问题。与Kafka([Apache Kafka](http://kafka.apache.org/))、RabbitMQ([RabbitMQ](http://www.rabbitmq.com/download.html))用于服务间的消息队列不同，disruptor一般用于线程间消息的传递。
+
+基于Disruptor开发的系统单线程能支撑每秒600万订单，2010年在QCon演讲后，获得了业界关注。2011年，企业应用软件专家Martin Fowler专门撰写长文介绍[The LMAX Architecture](https://martinfowler.com/articles/lmax.html)。同年它还获得了Oracle官方的Duke大奖。其他关于disruptor的背景就不在此多言，可以自己google。
 
 ## 官方资料
 disruptor github wiki有关于disruptor相关概念和原理的介绍，该wiki已经很久没有更新。像Design and Implementation，对于想了解disruptor的人是很有吸引力的，但是只有题目没有内容，还是很遗憾的。本文稍后会对其内部原理做一个介绍性的描述。

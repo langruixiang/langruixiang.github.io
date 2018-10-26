@@ -5,7 +5,7 @@ baseurl:
 url: 
 date_format: "ordinal"
 title: langrx
-subtitle: 贵有恒
+subtitle: Never give up on a dream just because of the time it will take to accomplish it. The time will pass anyway.
 description: langrx
 keywords: empty
 timezone: Asia/Shanghai
@@ -98,14 +98,14 @@ gitment:
     owner: 
     repo: 
     oauth:
-        client_id: 
-        client_secret: 
+        client_id:
+        client_secret:
 # https://github.com/gitalk/gitalk#install
 gitalk:
-    owner: 
-    repo: 
-    clientID: 
-    clientSecret: 
+    owner: langruixiang
+    repo: blog_comment
+    clientID: be8f34f9cb25279ca4e0
+    clientSecret: 2fbeb4660b728e83d85da0dd615b62783f3fc1da
 # 在使用其它评论组件时可点击显示 Disqus
 lazy_load_disqus : false
 

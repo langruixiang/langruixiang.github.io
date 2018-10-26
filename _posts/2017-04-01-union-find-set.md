@@ -8,7 +8,10 @@ keywords: Data Structure, Union Find Set
 
 
 ## 概述
-本文用数组arr实现了并查集：当arr[i] == i 时， i为集合的根节点，集合的标号为i。当arr[i] != i 时，则arr[i] 为i的父节点，沿着父节点向上寻找，直到arr[i] == i，即找到i所属的集合。主要操作如下：
+
+本文用数组arr实现了并查集。
+
+当arr[i] == i 时， i为集合的根节点，集合的标号为i。当arr[i] != i 时，则arr[i] 为i的父节点，沿着父节点向上寻找，直到arr[i] == i，即找到i所属的集合。主要操作如下：
 
 * 初始化：最开始，所有的元素属于不同的集合，所以arr[i] = i
 * Find(i): 如果arr[i] == i 则返回i；如果arr[i] != i， 则让i = arr[i], 重复执行该步骤。
