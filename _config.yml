@@ -2,7 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-url: niceaz.com
+    url: http://niceaz.com
 date_format: "ordinal"
 title: langrx
 subtitle: Never give up on a dream just because of the time it will take to accomplish it. The time will pass anyway.
