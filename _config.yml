@@ -2,12 +2,12 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-    url: http://niceaz.com
+url: http://niceaz.com
 date_format: "ordinal"
 title: langrx
 subtitle: Never give up on a dream just because of the time it will take to accomplish it. The time will pass anyway.
-description: langrx
-keywords: empty
+description: langrx的个人博客
+keywords: langrx, 郎瑞祥
 timezone: Asia/Shanghai
 encoding: "utf-8"
 side_bar_repo_limit: 5
