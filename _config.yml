@@ -2,7 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-url: 
+url: niceaz.com
 date_format: "ordinal"
 title: langrx
 subtitle: Never give up on a dream just because of the time it will take to accomplish it. The time will pass anyway.
@@ -16,8 +16,8 @@ side_bar_repo_limit: 5
 #      Author      #
 # ---------------- #
 author: Ruixiang Lang
-organization: 
-organization_url: 
+organization: 中科院计算所硕士毕业
+organization_url: http://www.ict.ac.cn
 github_username: langruixiang
 location: Hangzhou, China
 email: langruixiang@foxmail.com
@@ -81,7 +81,7 @@ collections:
         output: true
         permalink: /wiki/:path/
 
-repository: mzlogin/mzlogin.github.io
+repository: langruixiang/langruixiang.github.io
 
 # ---------------- #
 #      Comments    #

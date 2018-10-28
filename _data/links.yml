@@ -1,3 +1,14 @@
-- name: forever
-  url: http://niceaz.com
-
+- name: PingCAP团队博客
+  url: https://pingcap.com/blog-cn
+- name: 阿里中间件团队博客
+  url: http://jm.taobao.org
+- name: siddontang
+  url: https://www.jianshu.com/u/1yJ3ge
+- name: 面向信仰编程
+  url: https://draveness.me/index
+- name: 编程小梦
+  url: https://blog.bcmeng.com
+- name: Matt's Blog
+  url: http://matt33.com
+- name: 码志
+  url: https://mazhuang.org
