@@ -1,1 +1,1 @@
-# 我的博客请访问[niceaz.com](https://niceaz.com)
+# 我的博客请访问[niceaz.com](http://niceaz.com)
