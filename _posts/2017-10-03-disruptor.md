@@ -161,7 +161,7 @@ disruptor也提供了函数让你自定义消费者之间的关系，如
 
 先看一段ABQ put算法的实现：
 - 每个对象一个锁，首先加锁
-- 如果数组是满的，加入锁的notFull条件等待队列。（notFull的具体机制可以看这里的一篇文章[wait、notify与Condition | forever](http://niceaz.com/wait%e3%80%81notify%e4%b8%8econdition/)）
+- 如果数组是满的，加入锁的notFull条件等待队列。（notFull的具体机制可以看这里的一篇文章[wait、notify与Condition](./2017-04-01-wait-notify.md)）
 - 元素加入数组
 - 释放锁
 
