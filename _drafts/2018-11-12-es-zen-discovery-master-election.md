@@ -22,7 +22,7 @@ Zen Discovery 从功能上可以分为两部分，第一部分是集群刚启动
 
 选主分为两类情况，一类是集群刚启动，不存在 Master，需要从所有的节点中选出 Master；另一类是一个节点加入一个集群，找到当前集群的 Master 加入。不管是哪一种情况，都经历了两个过程：同步集群信息，基于集群信息选主。
 
-选主阶段时序图如下
+选主逻辑的入口在 JoinThreadControl.startNewThreadIfNotRunning函数，核心流程时序图如下
 
 ![](/images/post/zen_sequence_diagram.png)
 
