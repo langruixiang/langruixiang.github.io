@@ -113,13 +113,11 @@ Lucene 工作原理如图所示，当新添加一片文档时，Lucene 进行分
 
 es 和 Bigtable两点最大的不同在于：
 
-1.  副本机制不同。Bigtable 底层基于 GFS，所以在 Bigtable 这一层，完全没有考虑副本的问题，全部丢给 GFS 去解决。es 则采用本地存储，es 的 Master 就需要解决诸如 Shard 的 Fail Over，Shard 的复制和迁移等。说到这点不同其实有点类似 AWS Aurora 和 Mirrored mysql 的区别，Aurora 把数据存储在了 S3上，实际上也是把副本机制从 Mirrored mysql 层下放到了共享存储层。做成这种架构的关键是有一个牛 x 的共享存储层，如 Google 的 GFS，AWS 的 S3。如果把 es 的存储放在成熟稳定的共享存储上，那么对 es 本身而言，只需要维护 Master 就可以，不涉及数据，几乎没有什么运维工作。这样做的一个弊端就是数据访问性能受到影响，毕竟共享存储的访问速度还是不及本地存储。Google 之后发表多篇数据存储论文(Bigtable,MegaStore,Percolator,Spanner)基本都是基于 GFS 的，相信这样确实减少了 Google 后续组件的开发难度和维护成本。
+1. 副本机制不同。Bigtable 底层基于 GFS，所以在 Bigtable 这一层，完全没有考虑副本的问题，全部丢给 GFS 去解决。es 则采用本地存储，es 的 Master 就需要解决诸如 Shard 的 Fail Over，Shard 的复制和迁移等。说到这点不同其实有点类似 AWS Aurora 和 Mirrored mysql 的区别，Aurora 把数据存储在了 S3上，实际上也是把副本机制从 Mirrored mysql 层下放到了共享存储层。做成这种架构的关键是有一个牛 x 的共享存储层，如 Google 的 GFS，AWS 的 S3。如果把 es 的存储放在成熟稳定的共享存储上，那么对 es 本身而言，只需要维护 Master 就可以，不涉及数据，几乎没有什么运维工作。这样做的一个弊端就是数据访问性能受到影响，毕竟共享存储的访问速度还是不及本地存储。Google 之后发表多篇数据存储论文(Bigtable,MegaStore,Percolator,Spanner)基本都是基于 GFS 的，相信这样确实减少了 Google 后续组件的开发难度和维护成本。
 
 2. LSM Tree 的具体机制不同。Bigtable 的 LSM Tree 是 BloomFilter + SSTable Index + SSTable。es 的 LSM Tree 是 FST + 倒排索引。FST 是一种类似于 Trie 的数据结构，相比于 Trie 多了后缀压缩的过程，用于快速定位 Term 在倒排索引中的位置。SSTable 和 Inverted Index 的不同如图所示。这也最终决定了 Bigtable 是一个 KV 存储，es 是一个搜索引擎。
 
 ![](/images/post/inverted_index_sstable.png)
-
-
 
 # 网易云 NES 服务最佳实践
 
@@ -160,8 +158,6 @@ ELK 的使用场景太过于经典以至于很多人只识 ELK 而不识 es，�
 ## 时序数据库
 
 es 还提供了丰富的数据聚合能力，与专业的时序数据库如 InfluxDB，Druid 相比，es 作为时序数据库性能确实稍显逊色，但是 es 架构相对较轻，运维相对简单，在满足性能的前提下，把 es 作为时序数据库不失为一个好的选择。如开源的分布式追踪系统[Zipkin](https://zipkin.io/)就支持将 es 作为其存储组件，es 的母公司 elastic 也基于 es的数据聚合和分析能力逐渐提供 APM 的功能。网易云内部一个经典的实践是[网易云APM](https://www.163yun.com/product/apm)针对不同的应用场景提供了基于 Druid 和 es 的不同部署架构，充分满足大数据量、高性能和快速部署的不同应用场景。
-
-
 
 # 引用
 
