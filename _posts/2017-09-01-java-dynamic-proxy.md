@@ -333,22 +333,22 @@ public Object invoke(Object proxy, Method method, Object[] args) throws Throwabl
 
 # 总结
 
-```
-Calculator calculator = (Calculator) Proxy.newProxyInstance(calculatorImpl.getClass().getClassLoader(), calculatorImpl.getClass().getInterfaces(), calculatorHandler);
-生成动态代理的过程步骤如下[2]：
+```Calculator calculator = (Calculator) Proxy.newProxyInstance(calculatorImpl.getClass().getClassLoader(), calculatorImpl.getClass().getInterfaces(), calculatorHandler);```
+生成动态代理的过程步骤如下：
 
+```
 // InvocationHandlerImpl 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分派转发
 // 其内部通常包含指向委托类实例的引用，用于真正执行分派转发过来的方法调用
-InvocationHandler handler = new InvocationHandlerImpl(..); 
+1. InvocationHandler handler = new InvocationHandlerImpl(..); 
  
 // 通过 Proxy 为包括 Interface 接口在内的一组接口动态创建代理类的类对象
-Class clazz = Proxy.getProxyClass(classLoader, new Class[] { Interface.class, ... }); 
+2. Class clazz = Proxy.getProxyClass(classLoader, new Class[] { Interface.class, ... }); 
  
 // 通过反射从生成的类对象获得构造函数对象
-Constructor constructor = clazz.getConstructor(new Class[] { InvocationHandler.class }); 
+3. Constructor constructor = clazz.getConstructor(new Class[] { InvocationHandler.class }); 
  
 // 通过构造函数对象创建动态代理类实例
-Interface Proxy = (Interface)constructor.newInstance(new Object[] { handler });
+4. Interface proxy = (Interface)constructor.newInstance(new Object[] { handler });
 ```
 
 Proxy.newProxyInstance帮我们做了2，3，4步，直接返回给我们一个动态代理对象，代理对象最终执行InvocationHandler中invoke函数。顺便强推文章[2]
