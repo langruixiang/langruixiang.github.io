@@ -31,14 +31,14 @@ AQS是Java实现同步组建的基础框架，其基本思想是用一个volatil
 AQS提供的模板方法有：
 
 
-* acquire: 该方法调用用户实现的tryAcquire函数，返回true则该函数直接返回，返回false则进入等待队列循环休眠等待直到成功。
+* acquire: 该方法调用用户实现的tryAcquire函数，返回true则该函数立即返回，返回false则进入等待队列循环休眠等待直到成功。
 * acquireInterruptibly：与acquire类似，不同之处在于在等待队列循环等待时，遇到中断会抛出InterruptedException异常，用户可以处理该中断异常
 * tryAcquireNanos：在acquireInterruptibly的基础上增加了时间限制，一定时间内没有成功获取则返回false
-* acquireShared：共享式的获取同步状态，该函数调用用户实现的tryAcquireShard函数，返回则直接返回，失败则进入等待队列，循环休眠等待
+* acquireShared：共享式的获取同步状态，该函数调用用户实现的tryAcquireShard函数，返回true则立刻返回；返回false则进入等待队列，循环休眠等待
 * acquireSharedInterruptibly：在等待队列可以相应中断，与上类似
 * tryAcquireShared：在acquireSharedInterruptibly增加了超时限制
-* release：调用用户tryRelease函数，返回true则返回，则唤醒一个循环等待队列的进程，返回false则什么也不做
-* releaseShared：共享式的释放同步状态，会调用用户自定义tryReleaseShared函数，返回true则返回，则唤醒一个循环等待队列的进程，返回false则什么也不做
+* release：调用用户tryRelease函数，返回true则返回，则唤醒**一个**循环等待队列的进程，返回false则什么也不做
+* releaseShared：共享式的释放同步状态，会调用用户自定义tryReleaseShared函数，返回true则返回，则唤醒循环等待队列的**所有**进程，返回false则什么也不做
 * getQueuedThreads：获取等待队列线程集合
 
 ## ReentrantLock源码分析
