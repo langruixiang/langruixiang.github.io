@@ -2,9 +2,11 @@
 layout: wiki
 title: 脚本提升效率
 categories: [效率]
-description: 一些shell脚本，iTerm2+zsh体验，提高工作效率
+description: 一些shell脚本，提高工作效率
 keywords: shell
 ---
+
+一些常用shell脚本，提升工作效率
 
 ## iterm2 tab自动变色
 
