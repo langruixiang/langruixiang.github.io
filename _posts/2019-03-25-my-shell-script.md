@@ -78,7 +78,9 @@ mvd book.pdf
 
 ```
 #!/bin/bash
-mv $DOWNLOAD_HOME/$1 `pwd`
+for file in $@; do
+    mv $DOWNLOAD_HOME/$file `pwd`
+done
 ```
 
 当我屁颠屁颠的使用这个命令时，shit，不能通过tab补全，我得输入文件的全名... 那还不如我输入mv那个原始命令呢，至少能tab补全，不用输入一大坨文件名，尤其当文件名很长的时候。
